@@ -1,2 +1,4 @@
 # school-guess-number
- School project to guess numbers
+Skolprojekt för att gissa nummer och låta datorn gissa nummer åt dig.
+
+[uppgift](/assigment.md)
