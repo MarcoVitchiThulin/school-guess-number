@@ -1,0 +1,50 @@
+WindowManager:
+    MainView:
+    PlayerGuessView:
+    PCGuessView:
+
+<MainView>:
+    name: "main"
+
+    GridLayout:
+
+        rows: 3
+        cols: 1
+        padding: 20
+        spacing: 20
+
+        Label:
+            text: "Gissa Tal!"
+            font_size: '30sp'
+
+        Button:
+            text: "Gissa datorns tal"
+            font_size: '20sp'
+            on_release:
+                app.root.current = "playerguess"
+                root.manager.transition.direction = "left"
+
+        Button:
+            text: "Låt datorn gissa ditt tal"
+            font_size: '20sp'
+            on_release:
+                app.root.current = "pcguess"
+                root.manager.transition.direction = "right"
+
+<PlayerGuessView>:
+    name: "playerguess"
+
+    Button:
+        text: "Avbryt"
+        on_release:
+            app.root.current = "main"
+            root.manager.transition.direction = "right"
+
+<PCGuessView>:
+    name: "pcguess"
+
+    Button:
+        text: "Avbryt"
+        on_release:
+            app.root.current = "main"
+            root.manager.transition.direction = "left"
