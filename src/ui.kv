@@ -1,6 +1,7 @@
 WindowManager:
     MainView:
     PlayerGuessView:
+    PCGuessPrepareView:
     PCGuessView:
 
 <WinPopup>
@@ -44,7 +45,7 @@ WindowManager:
             text: "Låt datorn gissa ditt tal"
             font_size: '20sp'
             on_release:
-                app.root.current = "pcguess"
+                app.root.current = "pcguessprepare"
                 root.manager.transition.direction = "right"
 
 <PlayerGuessView>:
@@ -74,6 +75,7 @@ WindowManager:
 
             TextInput:
                 on_text: root.onInput(args[1])
+                multiline: False
                 font_size: '50sp'
 
             Button:
@@ -88,11 +90,43 @@ WindowManager:
                 app.root.current = "main"
                 root.manager.transition.direction = "right"
 
+<PCGuessPrepareView>
+    name: "pcguessprepare"
+
+    GridLayout:
+
+        rows: 3
+        cols: 1
+        padding: 50
+
+        Label:
+            text: "Välj ett tal 1-50 åt datorn"
+            font_size: '30sp'
+
+        TextInput:
+            on_text: root.onInput(args[1])
+            multiline: False
+            font_size: '60sp'
+        
+        BoxLayout:
+
+            Button: 
+                text: "Avbryt"
+                on_release:
+                    app.root.current = "main"
+                    root.manager.transition.direction = "left"
+
+            Button:
+                text: "Bekräfta"
+                on_release:
+                    root.onEnter()
+                    root.manager.transition.direction = "down"
+
 <PCGuessView>:
     name: "pcguess"
 
     Button:
-        text: "Avbryt"
+        text: "Gå Tillbaka"
         on_release:
-            app.root.current = "main"
-            root.manager.transition.direction = "left"
+            app.root.current = "pcguessprepare"
+            root.manager.transition.direction = "up"

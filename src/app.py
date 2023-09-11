@@ -16,7 +16,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 
-userInput = '' # Håller TextInput värde från spelaren
+userInput = '' # Håller TextInput värde från användaren
 targetNumber = 0 # Håller det nummer som ska gissas
 guessAmount = 0 # Håller mängden gissningar som gjorts
 
@@ -54,13 +54,13 @@ class PlayerGuessView(Screen): # Skapa klass för view när spelaren gissar tal
         self.labelContent = "Börja gissa!"
         self.guessAmountContent = "Gissningar: 0"
 
-    # Event som körs när InputField:et uppdateras
+    # Event som körs när TextField:et uppdateras
     def onInput(x, y):
         global userInput
         global targetNumber
         userInput = y
 
-    # Event som körs när spelarenn bekräftar att gissa ett tal
+    # Event som körs när användaren bekräftar att gissa ett tal
     def onEnter(self):
         global userInput
         global guessAmount
@@ -82,6 +82,31 @@ class PlayerGuessView(Screen): # Skapa klass för view när spelaren gissar tal
             self.labelContent = f"{userInput} är rätt!"
             Factory.WinPopup().open()
 
+class PCGuessPrepareView(Screen): # Skapa klass för view innan datorn gissar tal
+
+    # Event för att uppdatera userInput när TextInput:en uppdateras
+    def onInput(x, y):
+        global userInput
+        userInput = y
+
+    # Event som körs när användaren bekräftar att gissa ett tal
+    def onEnter(x):
+        global userInput
+        global targetNumber
+
+        # Försök konvertera input till nummer
+        try:
+            userInput = int(userInput)
+        except:
+            print("Not a number")
+        else:
+
+            # Kolla storlek på nummer
+            if userInput > 50 or userInput < 1:
+                print("Too big or small")
+            else:
+                targetNumber = userInput
+                kv.current = "pcguess"
 
 class PCGuessView(Screen): # Skapa klass för view när datorn gissar tal
 
