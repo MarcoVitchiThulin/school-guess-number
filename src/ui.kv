@@ -3,6 +3,21 @@ WindowManager:
     PlayerGuessView:
     PCGuessView:
 
+<WinPopup>
+    title: 'Grattis!'
+    auto_dismiss: False
+    GridLayout:
+        rows: 3
+        cols: 1
+        Label:
+            text: 'Du gissade rätt tal!'
+            font_size: '40sp'
+        Label:
+            text: root.winLabelContent
+        Button:
+            text: 'Avsluta'
+            on_release: root.exitGame()
+
 <MainView>:
     name: "main"
 
@@ -21,6 +36,7 @@ WindowManager:
             text: "Gissa datorns tal"
             font_size: '20sp'
             on_release:
+                root.startPlayerGuess()
                 app.root.current = "playerguess"
                 root.manager.transition.direction = "left"
 
@@ -34,11 +50,43 @@ WindowManager:
 <PlayerGuessView>:
     name: "playerguess"
 
-    Button:
-        text: "Avbryt"
-        on_release:
-            app.root.current = "main"
-            root.manager.transition.direction = "right"
+    GridLayout:
+
+        rows: 3
+        cols: 1
+        padding: 20
+        spacing: 20
+
+        GridLayout:
+
+            rows: 2
+            cols: 1
+
+            Label:
+                text: root.labelContent
+                font_size: '30sp'
+
+            Label:
+                text: root.guessAmountContent
+                font_size: '20sp'
+
+        BoxLayout:
+
+            TextInput:
+                on_text: root.onInput(args[1])
+                font_size: '50sp'
+
+            Button:
+                text: "Gissa"
+                font_size: '30sp'
+                on_release: root.onEnter()
+
+        Button:
+            text: "Avbryt"
+            font_size: '30sp'
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
 
 <PCGuessView>:
     name: "pcguess"
