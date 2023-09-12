@@ -4,7 +4,7 @@ WindowManager:
     PCGuessPrepareView:
     PCGuessView:
 
-<WinPopup>
+<PlayerWinPopup>
     title: 'Grattis!'
     auto_dismiss: False
     GridLayout:
@@ -17,14 +17,29 @@ WindowManager:
             text: root.winLabelContent
         Button:
             text: 'Avsluta'
-            on_release: root.exitGame()
+            on_release: root.exitApp()
+
+<PCWinPopup>
+    title: 'Jag vann!'
+    auto_dismiss: False
+    GridLayout:
+        rows: 3
+        cols: 1
+        Label:
+            text: 'Jag gissade rätt tal!'
+            font_size: '40sp'
+        Label:
+            text: root.winLabelContent
+        Button:
+            text: 'Avsluta'
+            on_release: root.exitApp()
 
 <MainView>:
     name: "main"
 
     GridLayout:
 
-        rows: 3
+        rows: 4
         cols: 1
         padding: 20
         spacing: 20
@@ -47,6 +62,12 @@ WindowManager:
             on_release:
                 app.root.current = "pcguessprepare"
                 root.manager.transition.direction = "right"
+
+        Button:
+            text: "Avsluta"
+            font_size: '20sp'
+            on_release:
+                root.exitApp()
 
 <PlayerGuessView>:
     name: "playerguess"
@@ -125,8 +146,54 @@ WindowManager:
 <PCGuessView>:
     name: "pcguess"
 
-    Button:
-        text: "Gå Tillbaka"
-        on_release:
-            app.root.current = "pcguessprepare"
-            root.manager.transition.direction = "up"
+    GridLayout:
+
+        rows: 4
+        cols: 1
+        spacing: 20
+        padding: 20
+
+        Label:
+            text: root.labelOutput
+            font_size: '20sp'
+
+        BoxLayout:
+
+            Label:
+                text: root.labelTargetValue
+
+            Label:
+                text: root.labelGuessAmount
+
+            Label:
+                text: root.labelPossibleRange
+
+            Label
+                text: root.labelPossibleRemaining
+
+        BoxLayout:
+        
+            Button:
+                text: "Börja gissa"
+                disabled: root.buttonGuessEnabled
+                on_release: root.buttonGuessClick()
+            
+            Button:
+                text: "För lågt"
+                disabled: root.buttonLowEnabled
+                on_release: root.buttonLowClick()
+
+            Button:
+                text: "För högt"
+                disabled: root.buttonHighEnabled
+                on_release: root.buttonHighClick()
+
+            Button:
+                text: "Korrekt"
+                disabled: root.buttonCorrectEnabled
+                on_release: root.buttonCorrectClick()
+
+        Button:
+            text: "Avsluta"
+            on_release:
+                root.exitApp()
